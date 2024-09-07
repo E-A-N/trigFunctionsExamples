@@ -1,3 +1,7 @@
+/*
+View Example at: https://playground.babylonjs.com/#R2GIK8
+*/
+
 var createScene = function () {
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
