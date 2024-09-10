@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Box</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+    <script>
+        // Get the canvas element and its 2D drawing context
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function drawCircle(x, y, radius, segments = 100) {
+            //represent angle of full circl with (2 * Math.PI)
+            // then divide it into segmetns
+            const angleStep = (2 * Math.PI) / segments; // Angle between each segment
+            ctx.beginPath();
+
+            // Start at the circle's perimeter
+            //cos of an angle gives the horizontal distance from origin to a point
+            //on the circle
+            let startX = x + radius * Math.cos(0);
+            //sign of an angle gives the vertical distance from the origin to a point
+            //on the circle
+            let startY = y + radius * Math.sin(0);
+            ctx.moveTo(startX, startY);
+
+            // Draw lines between each calculated point
+            // for (let i = 1; i <= segments; i++) {
+            //     const angle = i * angleStep;
+            //     const endX = x + radius * Math.cos(angle);
+            //     const endY = y + radius * Math.sin(angle);
+            //     // ctx.moveTo(endX, endY);
+            //     ctx.lineTo(endX, endY);
+            // }
+
+            let iter = 0;
+            while (radius > 0){
+                const angle = iter * angleStep;
+                const endX = x + radius * Math.cos(angle);
+                const endY = y + radius * Math.sin(angle);
+                // ctx.moveTo(endX, endY);
+                ctx.lineTo(endX, endY);
+                iter++;
+                radius -= 1.5;
+                if (iter > segments){
+                    iter = 0;
+                }
+            }
+
+            ctx.closePath(); // Close the path to complete the circle
+            ctx.strokeStyle = 'blue'; // Line color
+            ctx.lineWidth = 2; // Line width
+            ctx.stroke(); // Draw the outline of the circle
+            ctx.fillStyle = 'lightblue'; // Fill color
+            // ctx.fill(); // Fill the circle
+        }
+
+        // Example usage: Draw a circle centered at (200, 200) with a radius of 100
+        drawCircle(200, 200, 100, 10);
+    </script>
+</body>
+</html>
